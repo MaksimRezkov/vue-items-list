@@ -10,10 +10,11 @@ export type UseFetchItemsRes = {
   errFetchItems: Ref<AxiosError | null>,
   page: Ref<number>,
   isLoading: Ref<boolean>,
+  totalCount: Ref<string | null>,
 };
 
 export const useFetchItems: () => UseFetchItemsRes = () => {
-  const { itemList, errFetchItems, limit, page, isLoading } = useFetchItemsData();
+  const { itemList, errFetchItems, limit, page, isLoading, totalCount } = useFetchItemsData();
 
   const fetchItems = () => {
     isLoading.value = true;
@@ -21,7 +22,8 @@ export const useFetchItems: () => UseFetchItemsRes = () => {
     apiJSONPlaceholderService.getCommentsByPage<ItemInt[]>({ page: page.value, limit: limit.value })
       .then(res => {
         setTimeout(() => {
-          const { data } = res;
+          const { data, headers } = res;
+          totalCount.value = headers['x-total-count'] as string;
           itemList.value.push(...data);
         }, 2500);
       })
@@ -30,7 +32,7 @@ export const useFetchItems: () => UseFetchItemsRes = () => {
       })
       .finally(() => {
         setTimeout(() => {
-          isLoading.value = false;
+          isLoading.value && (isLoading.value = false);
         }, 2500);
       });
   };
@@ -45,5 +47,6 @@ export const useFetchItems: () => UseFetchItemsRes = () => {
     page,
     errFetchItems,
     isLoading,
+    totalCount,
   };
 };

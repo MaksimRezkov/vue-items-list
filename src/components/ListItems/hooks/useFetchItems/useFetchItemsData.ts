@@ -10,9 +10,10 @@ type UseFetchItemsDataRes = UseFetchItemsRes & {
 export const useFetchItemsData: () => UseFetchItemsDataRes = () => {
   const itemList = ref<ItemInt[]>([]);
   const page = ref<number>(1);
-  const limit = ref<number>(10);
+  const limit = ref<number>(3);
   const isLoading = ref<boolean>(false);
   const errFetchItems = ref<AxiosError | null>(null);
+  const totalCount = ref<string | null>(null);
 
   return {
     itemList,
@@ -20,5 +21,6 @@ export const useFetchItemsData: () => UseFetchItemsDataRes = () => {
     limit,
     isLoading,
     errFetchItems,
+    totalCount,
   };
 };

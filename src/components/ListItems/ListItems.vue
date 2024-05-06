@@ -1,9 +1,9 @@
 <template>
   <div class="list">
-    <div v-if="!isLoading" class="list-items">
+    <div class="list-items">
       <Item v-for="item in itemList" :key="item.id" :item="item"/>
     </div>
-    <LoadSpinner v-else/>
+    <LoadSpinner v-if="isLoading"/>
   </div>
 </template>
 
@@ -11,6 +11,8 @@
   import Item from '@/components/Item/Item.vue';
   import { LoadSpinner } from '@/components/common';
   import { useFetchItems } from './hooks/useFetchItems';
+  import { useCheckScroll, useCheckRemainingWithoutScroll } from './hooks/utils';
+import { ItemInt } from '@/types/Comment';
 
   export default {
     components: {
@@ -18,16 +20,16 @@
       LoadSpinner,
     },
     setup() {
-      const { itemList, page, errFetchItems, isLoading } = useFetchItems();
-      const incrementPage = () => {
-        page.value++;
-      };
+      const { itemList, errFetchItems, isLoading, totalCount, page } = useFetchItems();
+      useCheckScroll(totalCount, itemList, page);
+      useCheckRemainingWithoutScroll<ItemInt>(totalCount, itemList, page);
+      console.log('setup');
 
       return {
         itemList,
-        incrementPage,
         errFetchItems,
         isLoading,
+        totalCount,
       };
     }
   }
@@ -40,6 +42,7 @@
   flex-direction: column;
 
   padding: 2rem;
+  padding-bottom: 3rem;
 
   &-items {
     display: flex;
