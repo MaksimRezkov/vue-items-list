@@ -45,7 +45,8 @@
     display: flex;
     place-items: center;
     flex-direction: column;
-    gap: 10px;
+    gap: 25px;
+    width: 100%;
   }
 
   &-loader {

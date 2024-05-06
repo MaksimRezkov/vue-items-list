@@ -12,6 +12,5 @@
   .main {
     min-height: 100vh;
     background-color: #282828;
-    border: 1px solid green;
   }
 </style>
