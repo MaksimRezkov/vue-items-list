@@ -3,19 +3,19 @@
     <div v-if="!isLoading" class="list-items">
       <Item v-for="item in itemList" :key="item.id" :item="item"/>
     </div>
-    <div v-else class="list-loader">
-      <h2>Loading...</h2>
-    </div>
+    <LoadSpinner v-else/>
   </div>
 </template>
 
 <script lang="ts">
   import Item from '@/components/Item/Item.vue';
+  import { LoadSpinner } from '@/components/common';
   import { useFetchItems } from './hooks/useFetchItems';
 
   export default {
     components: {
       Item,
+      LoadSpinner,
     },
     setup() {
       const { itemList, page, errFetchItems, isLoading } = useFetchItems();

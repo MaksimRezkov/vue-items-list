@@ -23,7 +23,7 @@ export const useFetchItems: () => UseFetchItemsRes = () => {
         setTimeout(() => {
           const { data } = res;
           itemList.value.push(...data);
-        }, 1500);
+        }, 2500);
       })
       .catch((err: AxiosError) => {
         errFetchItems.value = err;
@@ -31,7 +31,7 @@ export const useFetchItems: () => UseFetchItemsRes = () => {
       .finally(() => {
         setTimeout(() => {
           isLoading.value = false;
-        }, 1500);
+        }, 2500);
       });
   };
 
