@@ -4,7 +4,6 @@ export const useCheckRemainingWithoutScroll = <T>(totalCount: Ref<string | null>
   watch(
     totalCount,
     () => {
-      console.log("WATCH");
       const isNoScroll = document.body.scrollHeight === document.body.offsetHeight;
       if (totalCount.value && +totalCount.value > items.value.length && isNoScroll) {
         page.value++;

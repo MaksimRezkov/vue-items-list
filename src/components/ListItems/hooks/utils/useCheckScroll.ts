@@ -2,10 +2,18 @@ import { ItemInt } from "@/types/Comment";
 import { throttle } from "@/utils";
 import { Ref, onBeforeUnmount, onMounted } from "vue";
 
-export const useCheckScroll = (totalCount: Ref<string | null>, itemList: Ref<ItemInt[]>, page: Ref<number>) => {
+interface UseCheckScrollArgs {
+  totalCount: Ref<string | null>,
+  itemList: Ref<ItemInt[]>,
+  page: Ref<number>,
+  isLoading: Ref<boolean>,
+}
+
+export const useCheckScroll = (params: UseCheckScrollArgs) => {
+  const { isLoading, itemList, page, totalCount } = params;
   const onScroll = () => {
     const isFetchedAll = totalCount.value && +totalCount.value === itemList.value.length;
-    if (!totalCount.value || isFetchedAll) return;
+    if (!totalCount.value || isFetchedAll || isLoading.value) return;
 
     // Высота документа и экрана
     const height = document.body.offsetHeight
@@ -21,17 +29,8 @@ export const useCheckScroll = (totalCount: Ref<string | null>, itemList: Ref<Ite
     const position = scrolled + screenHeight
 
     if (position > threshold) {
-      console.log('ADD ITEMS');
       page.value++;
     }
-  
-    // console.log('**********************************');
-    // console.log('height', height);
-    // console.log('screenHeight', screenHeight);
-    // console.log('scrolled', scrolled);
-    // console.log('threshold', threshold);
-    // console.log('position', position);
-    // console.log('***********************************');
   };
 
   const throttledOnScroll = throttle(100, onScroll);

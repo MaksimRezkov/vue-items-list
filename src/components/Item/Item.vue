@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-  import Sublist from './Sublist.vue';
+  import Sublist from './Sublist/Sublist.vue';
   import { ItemInt } from '@/types/Comment';
   import { Ref, ref } from 'vue';
 

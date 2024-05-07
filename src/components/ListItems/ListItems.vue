@@ -21,9 +21,8 @@ import { ItemInt } from '@/types/Comment';
     },
     setup() {
       const { itemList, errFetchItems, isLoading, totalCount, page } = useFetchItems();
-      useCheckScroll(totalCount, itemList, page);
+      useCheckScroll({totalCount, itemList, page, isLoading });
       useCheckRemainingWithoutScroll<ItemInt>(totalCount, itemList, page);
-      console.log('setup');
 
       return {
         itemList,

@@ -1,11 +1,11 @@
-export const throttle = (delay: number, targetFn: () => void) => {
+export const throttle = <T>(delay: number, targetFn: (params: T) => void) => {
   let timerId: any = null;
-  return function() {
+  return function(params: T) {
     if (timerId) {
       clearTimeout(timerId);
     }
     timerId = setTimeout(() => {
-      targetFn();
+      targetFn(params);
     }, delay);
   };
 };
