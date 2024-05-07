@@ -11,6 +11,7 @@ export type UseFetchItemsRes = {
   page: Ref<number>,
   isLoading: Ref<boolean>,
   totalCount: Ref<string | null>,
+  limit: Ref<number>,
 };
 
 export const useFetchItems: () => UseFetchItemsRes = () => {
@@ -44,5 +45,6 @@ export const useFetchItems: () => UseFetchItemsRes = () => {
     errFetchItems,
     isLoading,
     totalCount,
+    limit,
   };
 };

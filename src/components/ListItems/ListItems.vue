@@ -1,37 +1,24 @@
 <template>
   <div class="list">
-    <div class="list-items">
+    <div class="list-items" ref="listItemsRef">
       <Item v-for="item in itemList" :key="item.id" :item="item"/>
     </div>
     <LoadSpinner v-if="isLoading"/>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
   import Item from '@/components/Item/Item.vue';
   import { LoadSpinner } from '@/components/common';
   import { useFetchItems } from './hooks/useFetchItems';
   import { useCheckScroll, useCheckRemainingWithoutScroll } from './hooks/utils';
-import { ItemInt } from '@/types/Comment';
+  import { ItemInt } from '@/types/Comment';
+  import { onMounted, ref } from 'vue';
 
-  export default {
-    components: {
-      Item,
-      LoadSpinner,
-    },
-    setup() {
-      const { itemList, errFetchItems, isLoading, totalCount, page } = useFetchItems();
-      useCheckScroll({totalCount, itemList, page, isLoading });
-      useCheckRemainingWithoutScroll<ItemInt>(totalCount, itemList, page);
-
-      return {
-        itemList,
-        errFetchItems,
-        isLoading,
-        totalCount,
-      };
-    }
-  }
+  const listItemsRef = ref<HTMLElement | null>(null);
+  const { itemList, isLoading, totalCount, page, limit } = useFetchItems();
+  useCheckScroll({totalCount, itemList, page, isLoading });
+  onMounted(() => useCheckRemainingWithoutScroll<ItemInt>({ totalCount, itemList, page, listWrapper: listItemsRef, limit}))
 
 </script>
 <style lang="scss" scoped>
@@ -49,10 +36,6 @@ import { ItemInt } from '@/types/Comment';
     flex-direction: column;
     gap: 25px;
     width: 100%;
-  }
-
-  &-loader {
-    border: 1px solid red;
   }
 }
 </style>
