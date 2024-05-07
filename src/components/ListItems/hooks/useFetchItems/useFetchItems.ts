@@ -21,19 +21,15 @@ export const useFetchItems: () => UseFetchItemsRes = () => {
     errFetchItems.value = null;
     apiJSONPlaceholderService.getCommentsByPage<ItemInt[]>({ page: page.value, limit: limit.value })
       .then(res => {
-        setTimeout(() => {
-          const { data, headers } = res;
-          totalCount.value = headers['x-total-count'] as string;
-          itemList.value.push(...data);
-        }, 2500);
+        const { data, headers } = res;
+        totalCount.value = headers['x-total-count'] as string;
+        itemList.value.push(...data);
       })
       .catch((err: AxiosError) => {
         errFetchItems.value = err;
       })
       .finally(() => {
-        setTimeout(() => {
-          isLoading.value && (isLoading.value = false);
-        }, 2500);
+        isLoading.value && (isLoading.value = false);
       });
   };
 

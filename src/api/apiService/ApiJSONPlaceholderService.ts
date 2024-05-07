@@ -5,7 +5,7 @@ class ApiJSONPlaceholderService {
 
   getCommentsByPage<R>(queryParams: { limit: number; page: number }) {
     const { limit, page } = queryParams;
-    return axios.get<R>(`${this.baseURL}/posts?_limit=${limit}&_page=${page}`);
+    return axios.get<R>(`${this.baseURL}/comments?_limit=${limit}&_page=${page}`);
   }
 }
 
