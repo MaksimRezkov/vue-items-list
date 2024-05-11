@@ -1,4 +1,4 @@
-import { ItemInt } from "@/types/Comment";
+import { ItemInt } from "@/types/Item";
 import { AxiosError } from "axios";
 import { ref } from "vue";
 import { UseFetchItemsRes } from "./useFetchItems";

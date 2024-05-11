@@ -12,7 +12,7 @@
   import { LoadSpinner } from '@/components/common';
   import { useFetchItems } from './hooks/useFetchItems';
   import { useCheckScroll, useCheckRemainingWithoutScroll } from './hooks/utils';
-  import { ItemInt } from '@/types/Comment';
+  import { ItemInt } from '@/types/Item';
   import { onMounted, ref } from 'vue';
 
   const listItemsRef = ref<HTMLElement | null>(null);

@@ -1,4 +1,4 @@
-import { ItemInt } from "@/types/Comment";
+import { ItemInt } from "@/types/Item";
 import { throttle } from "@/utils";
 import { Ref, onBeforeUnmount, onMounted } from "vue";
 
