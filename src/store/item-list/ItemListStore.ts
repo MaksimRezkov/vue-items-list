@@ -1,22 +1,39 @@
-import { ItemInt } from "@/types/Comment";
-import { AxiosError } from "axios";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import useItemListData from "./hooks/useItemListData";
+import usePageData from "./hooks/usePageData";
+import useLimitData from "./hooks/useLimitData";
+import useLoadingData from "./hooks/useLoadingData";
+import useErrorData from "./hooks/useErrorData";
+import useTotalCountData from "./hooks/useTotalCountData";
 
-const useItemListStore = defineStore('itemList', () => {
-  const itemList = ref<ItemInt[]>([]);
-  const page = ref<number>(1);
-  const limit = ref<number>(10);
-  const isLoading = ref<boolean>(false);
-  const errFetchItems = ref<AxiosError | null>(null);
-  const totalCount = ref<string | null>(null);
+export const useItemListStore = defineStore('itemList', () => {
+  const { addItem, addItems, clearItemList, itemList } = useItemListData();
+  const { page, setPage } = usePageData();
+  const { limit, setLimit } = useLimitData();
+  const { isLoading, startLoading, stopLoading } = useLoadingData();
+  const { errFetchItems, setErrFetchItems } = useErrorData();
+  const { setTotalCount, totalCount } = useTotalCountData();
 
   return {
     itemList,
+    addItem,
+    addItems,
+    clearItemList,
+
     page,
+    setPage,
+
     limit,
+    setLimit,
+
     isLoading,
+    startLoading,
+    stopLoading,
+
     errFetchItems,
+    setErrFetchItems,
+
     totalCount,
+    setTotalCount,
   };
 });

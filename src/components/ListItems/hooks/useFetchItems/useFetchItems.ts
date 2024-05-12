@@ -1,36 +1,39 @@
 import { apiJSONPlaceholderService } from "@/api/apiService/ApiJSONPlaceholderService";
 import { ItemInt } from "@/types/Comment";
 import { AxiosError } from "axios";
-import { Ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import { usePageWatching } from "./usePageWatching";
-import { useFetchItemsData } from "./useFetchItemsData";
+import { useItemListStore } from "@/store";
+import { storeToRefs } from "pinia";
 
-export type UseFetchItemsRes = {
-  itemList: Ref<ItemInt[]>,
-  errFetchItems: Ref<AxiosError | null>,
-  page: Ref<number>,
-  isLoading: Ref<boolean>,
-  totalCount: Ref<string | null>,
-  limit: Ref<number>,
-};
-
-export const useFetchItems: () => UseFetchItemsRes = () => {
-  const { itemList, errFetchItems, limit, page, isLoading, totalCount } = useFetchItemsData();
+export const useFetchItems = () => {
+  const store = useItemListStore();
+  const {
+    startLoading,
+    stopLoading,
+    setErrFetchItems,
+    setTotalCount,
+    addItems,
+  } = store;
+  const {
+    page,
+    limit,
+  } = storeToRefs(store);
 
   const fetchItems = () => {
-    isLoading.value = true;
-    errFetchItems.value = null;
+    startLoading();
+    setErrFetchItems(null);
     apiJSONPlaceholderService.getCommentsByPage<ItemInt[]>({ page: page.value, limit: limit.value })
       .then(res => {
         const { data, headers } = res;
-        totalCount.value = headers['x-total-count'] as string;
-        itemList.value.push(...data);
+        setTotalCount(headers['x-total-count'] as string);
+        addItems(data);
       })
       .catch((err: AxiosError) => {
-        errFetchItems.value = err;
+        setErrFetchItems(err);
       })
       .finally(() => {
-        isLoading.value && (isLoading.value = false);
+        stopLoading();
       });
   };
 
@@ -38,13 +41,4 @@ export const useFetchItems: () => UseFetchItemsRes = () => {
     fetchItems();
   });
   usePageWatching(page, fetchItems);
-
-  return {
-    itemList,
-    page,
-    errFetchItems,
-    isLoading,
-    totalCount,
-    limit,
-  };
 };

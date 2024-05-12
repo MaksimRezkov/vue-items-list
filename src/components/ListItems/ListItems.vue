@@ -14,13 +14,16 @@
   import { useCheckScroll, useCheckRemainingWithoutScroll } from './hooks/utils';
   import { ItemInt } from '@/types/Comment';
   import { onMounted, ref } from 'vue';
+  import { storeToRefs } from 'pinia';
+  import { useItemListStore } from '@/store';
 
   const listItemsRef = ref<HTMLElement | null>(null);
-  const { itemList, isLoading, totalCount, page, limit } = useFetchItems();
+  useFetchItems();
+  const { itemList, isLoading, totalCount, page, limit } = storeToRefs(useItemListStore());
   useCheckScroll({totalCount, itemList, page, isLoading });
   onMounted(() => useCheckRemainingWithoutScroll<ItemInt>({ totalCount, itemList, page, listWrapper: listItemsRef, limit}))
-
 </script>
+
 <style lang="scss" scoped>
 .list {
   display: flex;
