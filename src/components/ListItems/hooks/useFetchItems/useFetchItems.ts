@@ -1,5 +1,5 @@
 import { apiJSONPlaceholderService } from "@/api/apiService/ApiJSONPlaceholderService";
-import { ItemInt } from "@/types/Comment";
+import { ItemInt } from "@/types/Item";
 import { AxiosError } from "axios";
 import { onMounted } from "vue";
 import { usePageWatching } from "./usePageWatching";
@@ -23,7 +23,7 @@ export const useFetchItems = () => {
   const fetchItems = () => {
     startLoading();
     setErrFetchItems(null);
-    apiJSONPlaceholderService.getCommentsByPage<ItemInt[]>({ page: page.value, limit: limit.value })
+    apiJSONPlaceholderService.getItemsByPage<ItemInt[]>({ page: page.value, limit: limit.value })
       .then(res => {
         const { data, headers } = res;
         setTotalCount(headers['x-total-count'] as string);

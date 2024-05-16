@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
   import Sublist from './Sublist/Sublist.vue';
-  import { ItemInt } from '@/types/Comment';
+  import { ItemInt } from '@/types/Item';
   import { Ref, ref } from 'vue';
 
   const props = defineProps<{
