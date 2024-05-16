@@ -5,8 +5,13 @@ import useLimitData from "./hooks/useLimitData";
 import useLoadingData from "./hooks/useLoadingData";
 import useErrorData from "./hooks/useErrorData";
 import useTotalCountData from "./hooks/useTotalCountData";
+import { ItemListStoreSchemaInt } from "@/types/ItemListTypes";
 
-export const useItemListStore = defineStore('itemList', () => {
+export enum StoreKeys {
+  ITEM_LIST = 'itemList'
+}
+
+export const useItemListStore = defineStore<StoreKeys, ItemListStoreSchemaInt>(StoreKeys.ITEM_LIST, () => {
   const { addItem, addItems, clearItemList, itemList } = useItemListData();
   const { page, setPage } = usePageData();
   const { limit, setLimit } = useLimitData();

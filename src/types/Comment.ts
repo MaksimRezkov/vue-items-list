@@ -1,3 +1,4 @@
+/** Данные элемента списка */
 export interface ItemInt {
   postId: number,
   id: number,

@@ -1,18 +1,11 @@
-import { Ref, nextTick, watch } from "vue";
-
-interface UseCheckRemainingWithoutScrollArgs<T> {
-  totalCount: Ref<string | null>,
-  itemList: Ref<T[]>,
-  page: Ref<number>,
-  listWrapper: Ref<HTMLElement | null>,
-  limit: Ref<number>,
-}
+import { UseCheckRemainingWithoutScrollArgs } from "@/types/ItemListTypes";
+import { nextTick, watch } from "vue";
 
 /** Проверка при первичной подгрузке того, что загружаемый контент создал скролл, если скролла нет,
  * вызывает подгрузку достаточного кол-ва элементов;
  * используем nextTick, чтобы вычисление isNoScroll произошло после того как спсиок отрисуется
  */
-export const useCheckRemainingWithoutScroll = <T>(params: UseCheckRemainingWithoutScrollArgs<T>) => {
+export const useCheckRemainingWithoutScroll = (params: UseCheckRemainingWithoutScrollArgs) => {
   const { itemList, limit, listWrapper, page, totalCount } = params;
   watch(
     totalCount,

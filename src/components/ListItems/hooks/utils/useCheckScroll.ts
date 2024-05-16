@@ -1,15 +1,8 @@
-import { ItemInt } from "@/types/Comment";
+import { UseCheckScrollArgsInt } from "@/types/ItemListTypes";
 import { throttle } from "@/utils";
-import { Ref, onBeforeUnmount, onMounted } from "vue";
+import { onBeforeUnmount, onMounted } from "vue";
 
-interface UseCheckScrollArgs {
-  totalCount: Ref<string | null>,
-  itemList: Ref<ItemInt[]>,
-  page: Ref<number>,
-  isLoading: Ref<boolean>,
-}
-
-export const useCheckScroll = (params: UseCheckScrollArgs) => {
+export const useCheckScroll = (params: UseCheckScrollArgsInt) => {
   const { isLoading, itemList, page, totalCount } = params;
   const onScroll = () => {
     const isFetchedAll = totalCount.value && +totalCount.value === itemList.value.length;

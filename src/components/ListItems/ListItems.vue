@@ -12,7 +12,6 @@
   import { LoadSpinner } from '@/components/common';
   import { useFetchItems } from './hooks/useFetchItems';
   import { useCheckScroll, useCheckRemainingWithoutScroll } from './hooks/utils';
-  import { ItemInt } from '@/types/Comment';
   import { onMounted, ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import { useItemListStore } from '@/store';
@@ -21,7 +20,7 @@
   useFetchItems();
   const { itemList, isLoading, totalCount, page, limit } = storeToRefs(useItemListStore());
   useCheckScroll({totalCount, itemList, page, isLoading });
-  onMounted(() => useCheckRemainingWithoutScroll<ItemInt>({ totalCount, itemList, page, listWrapper: listItemsRef, limit}))
+  onMounted(() => useCheckRemainingWithoutScroll({ totalCount, itemList, page, listWrapper: listItemsRef, limit}))
 </script>
 
 <style lang="scss" scoped>
